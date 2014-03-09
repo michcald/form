@@ -65,4 +65,15 @@ class Form
         return $this->elements;
     }
     
+    public function getElement($name)
+    {
+        foreach ($this->elements as $element) {
+            if ($element->getName() == $name) {
+                return $element;
+            }
+        }
+        
+        throw new \Exception('Element not found: ' . $name);
+    }
+    
 }
