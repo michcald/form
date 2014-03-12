@@ -75,25 +75,11 @@ class Form
         
         throw new \Exception('Element not found: ' . $name);
     }
-    
-    /**
-     * 
-     * @param array $data The values to validate
-     * @param bool $strict If $data has more fields than the repo
-     */
-    public function isValid(array $data, $strict = true)
+
+    public function isValid()
     {
-        if ($strict && count($data) != count($this->elements)) {
-            return false;
-        }
-        
         foreach ($this->elements as $element) {
-            if (array_key_exists($element->getName(), $data)) {
-                $element->setValue($data[$element->getName()]);
-                if (!$element->isValid()) {
-                    return false;
-                }
-            } else if ($strict) {
+            if (!$element->isValid()) {
                 return false;
             }
         }
