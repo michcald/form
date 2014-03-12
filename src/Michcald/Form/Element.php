@@ -94,7 +94,7 @@ abstract class Element
         
         foreach ($this->validators as $validator) {
             if (!$validator->validate($this->getValue())) {
-                $errors[] = $validator->getError();
+                $errors = array_merge($errors, $validator->getErrorMessages());
             }
         }
         
