@@ -83,14 +83,14 @@ class Form
      */
     public function isValid(array $data, $strict = true)
     {
-        if ($strict && count($data) != count($this->fields)) {
+        if ($strict && count($data) != count($this->elements)) {
             return false;
         }
         
-        foreach ($this->fields as $field) {
-            if (array_key_exists($field->getName(), $data)) {
-                $field->setValue($data[$field->getName()]);
-                if (!$field->isValid()) {
+        foreach ($this->elements as $element) {
+            if (array_key_exists($element->getName(), $data)) {
+                $element->setValue($data[$element->getName()]);
+                if (!$element->isValid()) {
                     return false;
                 }
             } else if ($strict) {
