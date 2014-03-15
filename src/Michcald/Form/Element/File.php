@@ -20,6 +20,11 @@ class File extends \Michcald\Form\Element
 
     public function isValid()
     {
+        if (!is_array($this->value) || 
+            !array_key_exists('tmp_name', $this->value)) {
+            return false;
+        }
+        
         $filePath = $this->value['tmp_name'];
 
         foreach ($this->validators as $validator) {
@@ -29,6 +34,25 @@ class File extends \Michcald\Form\Element
         }
 
         return true;
+    }
+    
+    public function getErrorMessages()
+    {
+        $errors = array();
+        
+        if (!is_array($this->value) || 
+            !array_key_exists('tmp_name', $this->value)) {
+            $errors[] = 'Must be a file';
+            return false;
+        }
+
+        foreach ($this->validators as $validator) {
+            if (!$validator->validate($this->getValue())) {
+                $errors = array_merge($errors, $validator->getErrorMessages());
+            }
+        }
+
+        return $errors;
     }
 
     public function __toString()
