@@ -15,7 +15,8 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "michcald/validator": "dev-master"
+        "michcald/validator": "dev-master",
+        "michcald/filter": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
@@ -26,6 +27,10 @@
         {
             "type": "vcs",
             "url":  "git@github.com:michcald/validator.git"
+        },
+        {
+            "type": "vcs",
+            "url":  "git@github.com:michcald/filter.git"
         }
     ],
     "autoload": {

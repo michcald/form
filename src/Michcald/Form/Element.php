@@ -29,9 +29,17 @@ abstract class Element
         return $this;
     }
 
-    public function getValue()
+    public function getValue($filtered = true)
     {
-        return $this->value;
+        $value = $this->value;
+        
+        if ($filtered) {
+            foreach ($this->filters as $filter) {
+                $value = $filter->filter($value);
+            }
+        }
+        
+        return $value;
     }
 
     public function addAttribute($name, $value)
@@ -72,11 +80,18 @@ abstract class Element
 
         return $this;
     }
+    
+    public function addFilter(\Michcald\Filter $filter)
+    {
+        $this->filters[] = $filter;
+
+        return $this;
+    }
 
     public function isValid()
     {
         foreach ($this->validators as $validator) {
-            if (!$validator->validate($this->getValue())) {
+            if (!$validator->validate($this->getValue(true))) {
                 return false;
             }
         }
