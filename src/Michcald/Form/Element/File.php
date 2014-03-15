@@ -2,15 +2,14 @@
 
 namespace Michcald\Form\Element;
 
-class Text extends \Michcald\Form\Element
+class File extends \Michcald\Form\Element
 {
 
     public function __toString()
     {
         return '<input ' .
-            'type="text" ' .
+            'type="file" ' .
             'name="' . $this->getName() . '" ' .
-            'value="' . $this->getValue() . '"' .
             $this->getAttributesString() .
             ' />';
     }

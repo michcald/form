@@ -2,13 +2,13 @@
 
 namespace Michcald\Form\Element;
 
-class Text extends \Michcald\Form\Element
+class Range extends \Michcald\Form\Element
 {
 
     public function __toString()
     {
         return '<input ' .
-            'type="text" ' .
+            'type="range" ' .
             'name="' . $this->getName() . '" ' .
             'value="' . $this->getValue() . '"' .
             $this->getAttributesString() .

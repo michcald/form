@@ -2,13 +2,13 @@
 
 namespace Michcald\Form\Element;
 
-class Text extends \Michcald\Form\Element
+class Password extends \Michcald\Form\Element
 {
 
     public function __toString()
     {
         return '<input ' .
-            'type="text" ' .
+            'type="password" ' .
             'name="' . $this->getName() . '" ' .
             'value="' . $this->getValue() . '"' .
             $this->getAttributesString() .
