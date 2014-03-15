@@ -5,10 +5,10 @@ namespace Michcald\Form;
 abstract class Element
 {
     private $name;
-    private $value;
+    protected $value;
     private $attributes = array();
-    private $filters = array();
-    private $validators = array();
+    protected $filters = array();
+    protected $validators = array();
 
     public function setName($name)
     {
@@ -32,13 +32,13 @@ abstract class Element
     public function getValue($filtered = true)
     {
         $value = $this->value;
-        
+
         if ($filtered) {
             foreach ($this->filters as $filter) {
                 $value = $filter->filter($value);
             }
         }
-        
+
         return $value;
     }
 
@@ -80,7 +80,7 @@ abstract class Element
 
         return $this;
     }
-    
+
     public function addFilter(\Michcald\Filter $filter)
     {
         $this->filters[] = $filter;
