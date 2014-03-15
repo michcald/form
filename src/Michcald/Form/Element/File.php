@@ -47,7 +47,7 @@ class File extends \Michcald\Form\Element
         }
 
         foreach ($this->validators as $validator) {
-            if (!$validator->validate($this->getValue())) {
+            if (!$validator->validate($this->value['tmp_name'])) {
                 $errors = array_merge($errors, $validator->getErrorMessages());
             }
         }
