@@ -13,6 +13,7 @@ class Form
     private $method;
     private $action;
     private $elements = array();
+    private $values = array();
 
     public function setName($name)
     {
@@ -73,13 +74,30 @@ class Form
         throw new \Exception('Element not found: ' . $name);
     }
 
-    public function isValid(array $values)
+    public function setValues(array $values)
+    {
+        foreach ($this->getElements() as $element) {
+            $key = $element->getName();
+            if (!array_key_exists($key, $values)) {
+                $this->values[$key] = null;
+            } else {
+                $this->values[$key] = $values[$key];
+            }
+        }
+
+        return $this;
+    }
+
+    public function getValues()
+    {
+        return $this->values;
+    }
+
+    public function isValid()
     {
         foreach ($this->elements as $element) {
-            $value = null;
-            if (array_key_exists($element->getName(), $values)) {
-                $value = $values[$element->getName()];
-            }
+            
+            $value = $this->values[$element->getName()];
 
             if (!$element->isValid($value)) {
                 return false;
