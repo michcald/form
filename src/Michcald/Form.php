@@ -93,7 +93,7 @@ class Form
     {
         $errors = array();
 
-        foreach ($this->fields as $field) {
+        foreach ($this->elements as $field) {
             $errors[$field->getName()] = $field->getErrorMessages();
         }
 
