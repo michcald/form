@@ -73,10 +73,15 @@ class Form
         throw new \Exception('Element not found: ' . $name);
     }
 
-    public function isValid()
+    public function isValid(array $values)
     {
         foreach ($this->elements as $element) {
-            if (!$element->isValid()) {
+            $value = null;
+            if (array_key_exists($element->getName(), $values)) {
+                $value = $values[$element->getName()];
+            }
+
+            if (!$element->isValid($value)) {
                 return false;
             }
         }

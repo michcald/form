@@ -5,10 +5,9 @@ namespace Michcald\Form;
 abstract class Element
 {
     private $name;
-    protected $value;
     private $attributes = array();
-    protected $filters = array();
     protected $validators = array();
+    protected $errors = array();
 
     public function setName($name)
     {
@@ -20,26 +19,6 @@ abstract class Element
     public function getName()
     {
         return $this->name;
-    }
-
-    public function setValue($value)
-    {
-        $this->value = $value;
-
-        return $this;
-    }
-
-    public function getValue($filtered = true)
-    {
-        $value = $this->value;
-
-        if ($filtered) {
-            foreach ($this->filters as $filter) {
-                $value = $filter->filter($value);
-            }
-        }
-
-        return $value;
     }
 
     public function addAttribute($name, $value)
@@ -81,17 +60,16 @@ abstract class Element
         return $this;
     }
 
-    public function addFilter(\Michcald\Filter $filter)
+    public function isValid($value)
     {
-        $this->filters[] = $filter;
+        $this->errors = array();
 
-        return $this;
-    }
-
-    public function isValid()
-    {
         foreach ($this->validators as $validator) {
-            if (!$validator->validate($this->getValue(true))) {
+            if (!$validator->validate($value)) {
+                $this->errors = array_merge(
+                    $this->errors,
+                    $validator->getErrorMessages()
+                );
                 return false;
             }
         }
@@ -101,15 +79,7 @@ abstract class Element
 
     public function getErrorMessages()
     {
-        $errors = array();
-
-        foreach ($this->validators as $validator) {
-            if (!$validator->validate($this->getValue())) {
-                $errors = array_merge($errors, $validator->getErrorMessages());
-            }
-        }
-
-        return $errors;
+        return $this->errors;
     }
 
     abstract public function __toString();
