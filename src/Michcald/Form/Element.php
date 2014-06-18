@@ -70,8 +70,11 @@ abstract class Element
                     $this->errors,
                     $validator->getErrorMessages()
                 );
-                return false;
             }
+        }
+
+        if (count($this->errors) > 0) {
+            return false;
         }
 
         return true;
