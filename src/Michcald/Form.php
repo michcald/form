@@ -95,16 +95,18 @@ class Form
 
     public function isValid()
     {
+        $valid = true;
+
         foreach ($this->elements as $element) {
-            
+
             $value = $this->values[$element->getName()];
 
             if (!$element->isValid($value)) {
-                return false;
+                $valid = false;
             }
         }
 
-        return true;
+        return $valid;
     }
 
     public function getErrorMessages()
